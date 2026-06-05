@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kornman & Asociados | Estudio Jurídico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #0a1628;
+      --navy-mid:  #112240;
+      --navy-light:#1e3a5f;
+      --gold:      #c9a84c;
+      --gold-light:#e8c96d;
+      --cream:     #f5f0e8;
+      --white:     #ffffff;
+      --gray-text: #8a9bb5;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body:    'Outfit', sans-serif;
+      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--navy);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 5%;
+      background: transparent;
+      transition: background var(--transition), padding var(--transition), backdrop-filter var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(10, 22, 40, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 1rem 5%;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.7rem;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 38px; height: 38px;
+      border: 1.5px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-icon svg { width: 18px; height: 18px; fill: var(--gold); }
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.05em;
+    }
+    .nav-logo-text span { color: var(--gold); }
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-text);
+      text-decoration: none;
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0; right: 0; height: 1px;
+      background: var(--gold);
+      transform: scaleX(0); transform-origin: right;
+      transition: transform var(--transition);
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+    .nav-cta {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      border: none;
+      padding: 0.7rem 1.8rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* ── HAMBURGER (mobile) ── */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 1.5px;
+      background: var(--cream); transition: var(--transition);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 0 5%;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 70% 40%, rgba(30,58,95,0.6) 0%, transparent 70%),
+        linear-gradient(135deg, #0a1628 0%, #0f2040 50%, #0a1628 100%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-accent-line {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px; background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    }
+    .hero-circle {
+      position: absolute; right: 5%; top: 50%;
+      transform: translateY(-50%);
+      width: min(500px, 55vw); aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.1);
+      animation: heroRotate 40s linear infinite;
+    }
+    .hero-circle::before {
+      content: '';
+      position: absolute; inset: 20px;
+      border-radius: 50%;
+      border: 1px dashed rgba(201,168,76,0.12);
+    }
+    .hero-circle::after {
+      content: '';
+      position: absolute; inset: 50px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.08);
+    }
+    @keyframes heroRotate {
+      from { transform: translateY(-50%) rotate(0deg); }
+      to   { transform: translateY(-50%) rotate(360deg); }
+    }
+    .hero-scales {
+      position: absolute; right: 12%; top: 50%;
+      transform: translateY(-50%);
+      width: min(220px, 25vw); aspect-ratio: 1;
+      opacity: 0.06;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 660px;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 2rem;
+    }
+    .hero-tag::before {
+      content: ''; width: 40px; height: 1px; background: var(--gold);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-title .firm-name {
+      display: block;
+      font-weight: 600;
+    }
+    .hero-divider {
+      width: 60px; height: 1px; background: var(--gold);
+      margin: 2rem 0;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--gray-text);
+      line-height: 1.8;
+      max-width: 480px;
+      margin-bottom: 3rem;
+    }
+    .hero-btns {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--navy); background: var(--gold);
+      padding: 1rem 2.2rem; text-decoration: none;
+      transition: var(--transition);
+    }
+    .btn-primary:hover {
+      background: var(--gold-light); transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(201,168,76,0.25);
+    }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--cream); background: transparent;
+      border: 1px solid rgba(245,240,232,0.2);
+      padding: 1rem 2.2rem; text-decoration: none;
+      transition: var(--transition);
+    }
+    .btn-secondary:hover {
+      border-color: var(--gold); color: var(--gold); transform: translateY(-2px);
+    }
+    .hero-stats {
+      position: absolute; bottom: 4rem; right: 5%; z-index: 2;
+      display: flex; gap: 3rem;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.8rem; font-weight: 300;
+      color: var(--white); line-height: 1;
+    }
+    .stat-num span { color: var(--gold); }
+    .stat-label {
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gray-text); margin-top: 0.4rem;
+    }
+    .scroll-hint {
+      position: absolute; bottom: 3rem; left: 5%; z-index: 2;
+      display: flex; align-items: center; gap: 0.8rem;
+      font-size: 0.68rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gray-text);
+    }
+    .scroll-hint-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.1); }
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 7rem 5%; }
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .section-tag::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 300; line-height: 1.1;
+      color: var(--white); margin-bottom: 1.5rem;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-sub {
+      font-size: 0.95rem; font-weight: 300;
+      color: var(--gray-text); line-height: 1.85;
+      max-width: 560px;
+    }
+
+    /* ── AREAS ── */
+    #areas { background: var(--navy-mid); position: relative; overflow: hidden; }
+    #areas::before {
+      content: '';
+      position: absolute; top: -1px; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    #areas::after {
+      content: '';
+      position: absolute; bottom: -1px; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .areas-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem;
+    }
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 1.5px;
+      background: rgba(201,168,76,0.1);
+    }
+    .area-card {
+      background: var(--navy-mid);
+      padding: 2.8rem 2.2rem;
+      position: relative; overflow: hidden;
+      transition: var(--transition);
+      cursor: default;
+    }
+    .area-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,0.06), transparent);
+      opacity: 0; transition: opacity var(--transition);
+    }
+    .area-card:hover::before { opacity: 1; }
+    .area-card:hover { background: var(--navy-light); transform: translateY(-3px); }
+    .area-card-num {
+      font-family: var(--font-display);
+      font-size: 3.5rem; font-weight: 300;
+      color: rgba(201,168,76,0.1);
+      line-height: 1; margin-bottom: 1.5rem;
+      transition: color var(--transition);
+    }
+    .area-card:hover .area-card-num { color: rgba(201,168,76,0.2); }
+    .area-icon {
+      width: 44px; height: 44px; margin-bottom: 1.2rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition);
+    }
+    .area-card:hover .area-icon { border-color: var(--gold); }
+    .area-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+    .area-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem; font-weight: 600;
+      color: var(--white); margin-bottom: 0.8rem;
+    }
+    .area-card p {
+      font-size: 0.85rem; font-weight: 300;
+      color: var(--gray-text); line-height: 1.75;
+    }
+    .area-card-arrow {
+      position: absolute; bottom: 2.2rem; right: 2.2rem;
+      opacity: 0; transform: translateX(-8px);
+      transition: var(--transition);
+      color: var(--gold); font-size: 1.2rem;
+    }
+    .area-card:hover .area-card-arrow { opacity: 1; transform: translateX(0); }
+
+    /* ── EQUIPO ── */
+    #equipo { position: relative; }
+    .team-header { margin-bottom: 4rem; }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+      gap: 2rem;
+    }
+    .team-card {
+      position: relative; overflow: hidden;
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.08);
+      transition: var(--transition);
+    }
+    .team-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
+    .team-photo {
+      width: 100%; aspect-ratio: 3/4;
+      background: var(--navy-light);
+      position: relative; overflow: hidden;
+    }
+    .team-photo-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .team-initials {
+      font-family: var(--font-display);
+      font-size: 4rem; font-weight: 300;
+      color: rgba(201,168,76,0.25);
+    }
+    .team-photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,22,40,0.9) 0%, transparent 50%);
+    }
+    .team-gold-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: var(--gold);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+    .team-card:hover .team-gold-bar { transform: scaleX(1); }
+    .team-info { padding: 1.8rem; }
+    .team-name {
+      font-family: var(--font-display);
+      font-size: 1.3rem; font-weight: 600;
+      color: var(--white); margin-bottom: 0.3rem;
+    }
+    .team-role {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .team-bio {
+      font-size: 0.83rem; font-weight: 300;
+      color: var(--gray-text); line-height: 1.7;
+    }
+    .team-socials {
+      display: flex; gap: 0.8rem; margin-top: 1.2rem;
+    }
+    .team-social-link {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray-text); text-decoration: none; font-size: 0.8rem;
+      transition: var(--transition);
+    }
+    .team-social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── BANNER SEPARADOR ── */
+    .banner-separator {
+      background: var(--gold);
+      padding: 3.5rem 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap;
+    }
+    .banner-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 300; color: var(--navy);
+    }
+    .banner-text strong { font-weight: 600; }
+    .btn-dark {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--white); background: var(--navy);
+      padding: 0.9rem 2rem; text-decoration: none;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+    .btn-dark:hover { background: var(--navy-light); transform: translateY(-2px); }
+
+    /* ── CONTACTO ── */
+    #contacto { background: var(--navy-mid); position: relative; overflow: hidden; }
+    #contacto::before {
+      content: '';
+      position: absolute; top: -1px; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 6rem; align-items: start;
+    }
+    .contact-info h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem; font-weight: 300;
+      color: var(--white); margin-bottom: 2rem;
+    }
+    .contact-detail {
+      display: flex; gap: 1.2rem;
+      margin-bottom: 2rem; align-items: flex-start;
+    }
+    .contact-detail-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-detail-icon svg { width: 17px; height: 17px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+    .contact-detail-body label {
+      display: block; font-size: 0.68rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem;
+    }
+    .contact-detail-body p {
+      font-size: 0.9rem; color: var(--cream); line-height: 1.6;
+    }
+    /* FOLK */
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group label {
+      font-size: 0.68rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gray-text);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: var(--font-body);
+      font-size: 0.88rem; font-weight: 300;
+      color: var(--cream);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 0.9rem 1.1rem;
+      outline: none;
+      transition: border-color var(--transition);
+      appearance: none;
+    }
+    .form-group select option { background: var(--navy); }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(138,155,181,0.5); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+    .form-submit {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--navy); background: var(--gold);
+      border: none; padding: 1.1rem 2.5rem;
+      cursor: pointer; width: 100%;
+      transition: var(--transition);
+    }
+    .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .form-success {
+      display: none; padding: 1.2rem;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold); font-size: 0.88rem;
+      text-align: center;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #070f1c;
+      padding: 4rem 5% 2rem;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 2rem;
+    }
+    .footer-brand p {
+      font-size: 0.85rem; font-weight: 300;
+      color: var(--gray-text); line-height: 1.8;
+      margin-top: 1.2rem;
+    }
+    .footer-col h4 {
+      font-size: 0.68rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.7rem; }
+    .footer-col ul li a {
+      font-size: 0.85rem; font-weight: 300;
+      color: var(--gray-text); text-decoration: none;
+      transition: color var(--transition);
+    }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy {
+      font-size: 0.75rem; color: rgba(138,155,181,0.5);
+    }
+    .footer-legal {
+      display: flex; gap: 1.5rem;
+    }
+    .footer-legal a {
+      font-size: 0.75rem; color: rgba(138,155,181,0.5);
+      text-decoration: none; transition: color var(--transition);
+    }
+    .footer-legal a:hover { color: var(--gold); }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── HERO ANIMACIÓN ENTRADA ── */
+    .hero-tag   { animation: fadeSlideUp 0.8s ease 0.2s both; }
+    .hero-title { animation: fadeSlideUp 0.8s ease 0.4s both; }
+    .hero-divider { animation: fadeSlideUp 0.8s ease 0.55s both; }
+    .hero-sub   { animation: fadeSlideUp 0.8s ease 0.65s both; }
+    .hero-btns  { animation: fadeSlideUp 0.8s ease 0.8s both; }
+    .hero-stats { animation: fadeSlideUp 0.8s ease 1s both; }
+    .scroll-hint { animation: fadeSlideUp 0.8s ease 1.2s both; }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero-stats { position: static; margin-top: 3rem; gap: 2rem; }
+      #hero { flex-direction: column; justify-content: center; padding-top: 7rem; }
+      .hero-circle { display: none; }
+      .contact-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 5rem 5%; }
+      .areas-header { flex-direction: column; }
+      .banner-separator { text-align: center; justify-content: center; }
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 99;
+      background: var(--navy);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 2.5rem;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 2rem; font-weight: 300;
+      color: var(--white); text-decoration: none;
+      transition: color var(--transition);
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close {
+      position: absolute; top: 1.5rem; right: 5%;
+      font-size: 1.5rem; color: var(--gold); cursor: pointer;
+      background: none; border: none;
+    }
+
+    /* ── TURNOS ── */
+    #turnos { background: var(--navy); position: relative; overflow: hidden; }
+    #turnos::before {
+      content: '';
+      position: absolute; top: -1px; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .turnos-wrapper {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start;
+    }
+    /* Precio */
+    .turno-precio-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 2.5rem; margin-bottom: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .turno-precio-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--gold);
+    }
+    .turno-precio-label {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.8rem;
+    }
+    .turno-precio-amount {
+      font-family: var(--font-display);
+      font-size: 3.5rem; font-weight: 300; color: var(--white); line-height: 1;
+    }
+    .turno-precio-amount sup {
+      font-size: 1.5rem; vertical-align: super; color: var(--gold);
+    }
+    .turno-precio-desc {
+      font-size: 0.82rem; font-weight: 300; color: var(--gray-text);
+      margin-top: 0.8rem; line-height: 1.7;
+    }
+    /* CBU */
+    .turno-cbu-box {
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 1.5rem; margin-top: 1.5rem;
+    }
+    .turno-cbu-title {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .turno-cbu-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.4rem;
+    }
+    .turno-cbu-key {
+      font-size: 0.72rem; color: var(--gray-text); letter-spacing: 0.05em;
+    }
+    .turno-cbu-val {
+      font-size: 0.82rem; font-weight: 500; color: var(--cream);
+      font-family: monospace; letter-spacing: 0.08em;
+    }
+    .turno-cbu-copy {
+      background: none; border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold); font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.3rem 0.8rem;
+      cursor: pointer; transition: var(--transition); margin-top: 0.8rem; width: 100%;
+    }
+    .turno-cbu-copy:hover { background: rgba(201,168,76,0.1); }
+    /* Pasos */
+    .turno-steps { margin-top: 2rem; }
+    .turno-step {
+      display: flex; gap: 1rem; margin-bottom: 1.2rem; align-items: flex-start;
+    }
+    .turno-step-num {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; color: var(--gold); font-weight: 500;
+    }
+    .turno-step-text {
+      font-size: 0.84rem; font-weight: 300; color: var(--gray-text);
+      line-height: 1.6; padding-top: 0.3rem;
+    }
+    .turno-step-text strong { color: var(--cream); font-weight: 500; }
+
+    /* Formulario de turno */
+    .turno-form-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.1);
+      padding: 2.8rem;
+    }
+    .turno-form-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem; font-weight: 300; color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .turno-form-sub {
+      font-size: 0.83rem; color: var(--gray-text); margin-bottom: 2rem; line-height: 1.6;
+    }
+    /* Calendario */
+    .cal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .cal-month {
+      font-family: var(--font-display);
+      font-size: 1.1rem; font-weight: 600; color: var(--white);
+    }
+    .cal-nav {
+      background: none; border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold); width: 30px; height: 30px;
+      cursor: pointer; font-size: 1rem; transition: var(--transition);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cal-nav:hover { background: rgba(201,168,76,0.1); }
+    .cal-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+      margin-bottom: 1.5rem;
+    }
+    .cal-day-name {
+      font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); text-align: center; padding: 0.4rem 0;
+    }
+    .cal-day {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      font-size: 0.82rem; color: var(--gray-text); border-radius: 0;
+      cursor: default; transition: var(--transition);
+      border: 1px solid transparent;
+    }
+    .cal-day.available {
+      color: var(--cream); cursor: pointer;
+      border: 1px solid rgba(201,168,76,0.1);
+    }
+    .cal-day.available:hover { border-color: var(--gold); color: var(--gold); }
+    .cal-day.selected {
+      background: var(--gold); color: var(--navy);
+      font-weight: 600; border-color: var(--gold);
+    }
+    .cal-day.today { border-color: rgba(201,168,76,0.4); }
+    .cal-day.past, .cal-day.empty { opacity: 0.2; cursor: default; }
+    .cal-day.weekend { opacity: 0.25; cursor: default; }
+
+    /* Horarios */
+    .horarios-label {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.8rem;
+    }
+    .horarios-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .horario-slot {
+      border: 1px solid rgba(201,168,76,0.15);
+      text-align: center; padding: 0.5rem 0.3rem;
+      font-size: 0.78rem; color: var(--gray-text);
+      cursor: pointer; transition: var(--transition);
+    }
+    .horario-slot.available { color: var(--cream); cursor: pointer; }
+    .horario-slot.available:hover { border-color: var(--gold); color: var(--gold); }
+    .horario-slot.selected { background: var(--gold); color: var(--navy); font-weight: 600; border-color: var(--gold); }
+    .horario-slot.taken { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; }
+
+    /* Resumen y form */
+    .turno-resumen {
+      background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2);
+      padding: 1rem 1.2rem; margin-bottom: 1.5rem; display: none;
+      font-size: 0.84rem; color: var(--cream); line-height: 1.8;
+    }
+    .turno-resumen strong { color: var(--gold); }
+    .turno-resumen.visible { display: block; }
+    .turno-form-fields { display: flex; flex-direction: column; gap: 1rem; }
+    .turno-file-label {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gray-text); margin-bottom: 0.5rem; display: block;
+    }
+    .turno-file-input {
+      width: 100%; background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(201,168,76,0.3);
+      padding: 1.2rem; text-align: center;
+      font-size: 0.82rem; color: var(--gray-text);
+      cursor: pointer; transition: var(--transition);
+    }
+    .turno-file-input:hover { border-color: var(--gold); color: var(--gold); }
+    input[type="file"] { display: none; }
+    .turno-submit {
+      width: 100%; background: var(--gold); border: none;
+      color: var(--navy); font-family: var(--font-body);
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 1.1rem;
+      cursor: pointer; transition: var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    }
+    .turno-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .turno-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .turno-success {
+      display: none; padding: 1.5rem; text-align: center;
+      background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3);
+    }
+    .turno-success-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .turno-success h4 {
+      font-family: var(--font-display); font-size: 1.4rem;
+      color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .turno-success p { font-size: 0.85rem; color: var(--gray-text); line-height: 1.7; }
+
+    @media (max-width: 900px) {
+      .turnos-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+      .horarios-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+
+    /* ── MAPA ── */
+    #ubicacion {
+      padding: 0;
+      position: relative;
+    }
+    .mapa-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      min-height: 480px;
+    }
+    .mapa-info {
+      background: var(--navy-mid);
+      padding: 4rem 3rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid rgba(201,168,76,0.15);
+      position: relative;
+    }
+    .mapa-info::before {
+      content: '';
+      position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    }
+    .mapa-info .section-tag { margin-bottom: 1rem; }
+    .mapa-info .section-title { font-size: clamp(1.8rem, 2.5vw, 2.6rem); margin-bottom: 1.5rem; }
+    .mapa-detail {
+      display: flex; gap: 1rem; align-items: flex-start;
+      margin-bottom: 1.4rem;
+    }
+    .mapa-detail-icon {
+      width: 38px; height: 38px; flex-shrink: 0;
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mapa-detail-icon svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+    .mapa-detail-body label {
+      display: block; font-size: 0.65rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem;
+    }
+    .mapa-detail-body p { font-size: 0.87rem; color: var(--cream); line-height: 1.6; }
+    .mapa-btn-dir {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--font-body);
+      font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--navy); background: var(--gold);
+      padding: 0.85rem 1.8rem; text-decoration: none;
+      margin-top: 1.5rem; transition: var(--transition);
+      width: fit-content;
+    }
+    .mapa-btn-dir:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .mapa-iframe-wrap {
+      position: relative;
+      overflow: hidden;
+      filter: grayscale(30%) contrast(1.05);
+    }
+    .mapa-iframe-wrap iframe {
+      width: 100%; height: 100%; min-height: 480px;
+      border: none; display: block;
+    }
+    .mapa-iframe-overlay {
+      position: absolute; inset: 0; pointer-events: none;
+      box-shadow: inset 0 0 40px rgba(10,22,40,0.4);
+    }
+    @media (max-width: 900px) {
+      .mapa-wrapper { grid-template-columns: 1fr; }
+      .mapa-iframe-wrap iframe { min-height: 320px; }
+      .mapa-info { padding: 3rem 5%; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a href="#hero"    onclick="toggleMenu()">Inicio</a>
+  <a href="#areas"   onclick="toggleMenu()">Áreas</a>
+  <a href="#equipo"  onclick="toggleMenu()">Equipo</a>
+  <a href="#ubicacion" onclick="toggleMenu()">Ubicación</a>
+  <a href="#turnos" onclick="toggleMenu()">Turnos</a>
+  <a href="#contacto" onclick="toggleMenu()">Contacto</a>
+</div>
+
+<!-- ── NAVBAR ── -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+    </div>
+    <span class="nav-logo-text">Kornman <span>&</span> Asociados</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hero">Inicio</a></li>
+    <li><a href="#areas">Áreas</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#ubicacion">Ubicación</a></li>
+    <li><a href="#turnos">Turnos</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#turnos" class="nav-cta">Reservar turno</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-accent-line"></div>
+  <div class="hero-circle"></div>
+
+  <div class="hero-content">
+    <p class="hero-tag">Estudio Jurídico · Buenos Aires</p>
+    <h1 class="hero-title">
+      Defensa <em>excepcional.</em>
+      <span class="firm-name">Kornman & Asociados.</span>
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">
+      Más de dos décadas representando a empresas e individuos con estrategia, rigor y compromiso inquebrantable. Su caso merece el más alto nivel de atención jurídica.
+    </p>
+    <div class="hero-btns">
+      <a href="#turnos" class="btn-primary">
+        Reservar turno
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#areas" class="btn-secondary">Ver áreas de práctica</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">20<span>+</span></div>
+      <div class="stat-label">Años de experiencia</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">1.2<span>k</span></div>
+      <div class="stat-label">Casos resueltos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">98<span>%</span></div>
+      <div class="stat-label">Clientes satisfechos</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-hint-line"></div>
+    Desplazarse
+  </div>
+</section>
+
+<!-- ── ÁREAS DE PRÁCTICA ── -->
+<section id="areas">
+  <div class="areas-header">
+    <div>
+      <p class="section-tag reveal">Especialidades</p>
+      <h2 class="section-title reveal reveal-delay-1">Áreas de <em>práctica</em></h2>
+    </div>
+    <p class="section-sub reveal reveal-delay-2">
+      Contamos con equipos especializados en cada rama del derecho para brindarle la representación más efectiva posible.
+    </p>
+  </div>
+  <div class="areas-grid">
+
+    <div class="area-card reveal">
+      <div class="area-card-num">01</div>
+      <div class="area-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <h3>Derecho Civil</h3>
+      <p>Contratos, sucesiones, familia, daños y perjuicios. Protegemos sus derechos en cada instancia del proceso civil.</p>
+      <span class="area-card-arrow">→</span>
+    </div>
+
+    <div class="area-card reveal reveal-delay-1">
+      <div class="area-card-num">02</div>
+      <div class="area-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21V12h6v9"/></svg>
+      </div>
+      <h3>Derecho Comercial</h3>
+      <p>Constitución de sociedades, fusiones y adquisiciones, litigios comerciales y asesoramiento corporativo integral.</p>
+      <span class="area-card-arrow">→</span>
+    </div>
+
+    <div class="area-card reveal reveal-delay-2">
+      <div class="area-card-num">03</div>
+      <div class="area-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+      </div>
+      <h3>Derecho Laboral</h3>
+      <p>Representación de trabajadores y empleadores. Despidos, ART, convenios colectivos y negociaciones paritarias.</p>
+      <span class="area-card-arrow">→</span>
+    </div>
+
+    <div class="area-card reveal reveal-delay-3">
+      <div class="area-card-num">04</div>
+      <div class="area-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <h3>Derecho Penal</h3>
+      <p>Defensa técnica en todas las etapas del proceso penal. Actuamos con celeridad, discreción y plena dedicación.</p>
+      <span class="area-card-arrow">→</span>
+    </div>
+
+    <div class="area-card reveal reveal-delay-1">
+      <div class="area-card-num">05</div>
+      <div class="area-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <h3>Derecho Inmobiliario</h3>
+      <p>Compraventa, locaciones, propiedad horizontal, desalojos y regularización de dominios.</p>
+      <span class="area-card-arrow">→</span>
+    </div>
+
+    <div class="area-card reveal reveal-delay-2">
+      <div class="area-card-num">06</div>
+      <div class="area-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>Derecho Administrativo</h3>
+      <p>Relaciones con el Estado, licitaciones, habilitaciones, recursos administrativos y contencioso-administrativo.</p>
+      <span class="area-card-arrow">→</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── EQUIPO ── -->
+<section id="equipo">
+  <div class="team-header">
+    <p class="section-tag reveal">Nuestros profesionales</p>
+    <h2 class="section-title reveal reveal-delay-1">El <em>equipo</em></h2>
+    <p class="section-sub reveal reveal-delay-2">
+      Abogados formados en las mejores universidades del país, con posgrados en el exterior y trayectoria comprobada en causas de alta complejidad.
+    </p>
+  </div>
+  <div class="team-grid">
+
+    <div class="team-card reveal">
+      <div class="team-photo">
+        <div class="team-photo-inner">
+          <span class="team-initials">LK</span>
+        </div>
+        <div class="team-photo-overlay"></div>
+        <div class="team-gold-bar"></div>
+      </div>
+      <div class="team-info">
+        <div class="team-name">Dr. Luis Mauricio Kornman</div>
+        <div class="team-role">Fundador · Director</div>
+        <p class="team-bio">Abogado, fundador del estudio con más de 20 años de trayectoria en litigios civiles, comerciales y corporativos de alta complejidad.</p>
+        <div class="team-socials">
+          <a href="#" class="team-social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="team-social-link" aria-label="Email">@</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="team-card reveal reveal-delay-1">
+      <div class="team-photo">
+        <div class="team-photo-inner">
+          <span class="team-initials">LV</span>
+        </div>
+        <div class="team-photo-overlay"></div>
+        <div class="team-gold-bar"></div>
+      </div>
+      <div class="team-info">
+        <div class="team-name">Dra. Laura Vega</div>
+        <div class="team-role">Socia · Derecho Laboral</div>
+        <p class="team-bio">Abogada (UNC), Master en Derecho del Trabajo (Universidad de Salamanca). Referente en derecho laboral corporativo y sindical.</p>
+        <div class="team-socials">
+          <a href="#" class="team-social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="team-social-link" aria-label="Email">@</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="team-card reveal reveal-delay-2">
+      <div class="team-photo">
+        <div class="team-photo-inner">
+          <span class="team-initials">MP</span>
+        </div>
+        <div class="team-photo-overlay"></div>
+        <div class="team-gold-bar"></div>
+      </div>
+      <div class="team-info">
+        <div class="team-name">Dr. Martín Peralta</div>
+        <div class="team-role">Asociado · Derecho Penal</div>
+        <p class="team-bio">Abogado (UNLP), especialista en derecho penal económico. Defensor técnico en causas de alta notoriedad a nivel nacional.</p>
+        <div class="team-socials">
+          <a href="#" class="team-social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="team-social-link" aria-label="Email">@</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="team-card reveal reveal-delay-3">
+      <div class="team-photo">
+        <div class="team-photo-inner">
+          <span class="team-initials">SC</span>
+        </div>
+        <div class="team-photo-overlay"></div>
+        <div class="team-gold-bar"></div>
+      </div>
+      <div class="team-info">
+        <div class="team-name">Dra. Sofía Castro</div>
+        <div class="team-role">Asociada · Derecho Inmobiliario</div>
+        <p class="team-bio">Abogada (USAL), con especialización en derecho registral y propiedad horizontal. Gestión integral de carteras inmobiliarias corporativas.</p>
+        <div class="team-socials">
+          <a href="#" class="team-social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="team-social-link" aria-label="Email">@</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ── UBICACIÓN / MAPA ── -->
+<section id="ubicacion">
+  <div class="mapa-wrapper">
+    <div class="mapa-info">
+      <p class="section-tag reveal">Dónde encontrarnos</p>
+      <h2 class="section-title reveal reveal-delay-1">Nuestra <em>ubicación</em></h2>
+
+      <div class="mapa-detail reveal reveal-delay-1">
+        <div class="mapa-detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="mapa-detail-body">
+          <label>Dirección</label>
+          <p>San Lorenzo 1850, Piso 2<br>Posadas, Misiones — CP 3300</p>
+        </div>
+      </div>
+
+      <div class="mapa-detail reveal reveal-delay-2">
+        <div class="mapa-detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.77 12a19.79 19.79 0 01-3.07-8.67A2 2 0 013.68 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.64a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.92v1z"/></svg>
+        </div>
+        <div class="mapa-detail-body">
+          <label>Teléfono</label>
+          <p>+54 376 400-0000<br>Lunes a Viernes, 9 a 18 hs.</p>
+        </div>
+      </div>
+
+      <div class="mapa-detail reveal reveal-delay-3">
+        <div class="mapa-detail-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="mapa-detail-body">
+          <label>Horario de atención</label>
+          <p>Lunes a Viernes<br>9:00 a 18:00 hs.</p>
+        </div>
+      </div>
+
+      <a
+        href="https://www.google.com/maps/dir/?api=1&destination=Posadas,+Misiones,+Argentina"
+        target="_blank"
+        class="mapa-btn-dir reveal reveal-delay-3"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+        Cómo llegar
+      </a>
+    </div>
+
+    <div class="mapa-iframe-wrap">
+      <iframe
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-55.9300%2C-27.3950%2C-55.8700%2C-27.3500&layer=mapnik&marker=-27.3671%2C-55.8962"
+        loading="lazy"
+        title="Ubicación Kornman & Asociados — Posadas, Misiones"
+        allowfullscreen
+      ></iframe>
+      <div class="mapa-iframe-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TURNOS ── -->
+<section id="turnos">
+  <div class="turnos-wrapper">
+
+    <!-- Columna izquierda: precio + CBU + pasos -->
+    <div>
+      <p class="section-tag reveal">Agendamiento online</p>
+      <h2 class="section-title reveal reveal-delay-1">Reservá tu <em>turno</em></h2>
+      <p class="section-sub reveal reveal-delay-2" style="margin-bottom:2rem;">
+        Elegí el día y horario que mejor te convenga, realizá la transferencia y adjuntá el comprobante. El Dr. Kornman te confirmará la consulta a la brevedad.
+      </p>
+
+      <div class="turno-precio-card reveal reveal-delay-2">
+        <div class="turno-precio-label">Consulta profesional</div>
+        <div class="turno-precio-amount"><sup>$</sup>15.000</div>
+        <div class="turno-precio-desc">
+          Consulta de 45 minutos con el Dr. Kornman o profesional asignado.<br>
+          Incluye análisis de su caso y orientación jurídica inicial.
+        </div>
+        <div class="turno-cbu-box">
+          <div class="turno-cbu-title">Datos para la transferencia</div>
+          <div class="turno-cbu-row">
+            <span class="turno-cbu-key">Titular</span>
+            <span class="turno-cbu-val">Luis Mauricio Kornman</span>
+          </div>
+          <div class="turno-cbu-row">
+            <span class="turno-cbu-key">CBU</span>
+            <span class="turno-cbu-val" id="cbuVal">0000003100012345678901</span>
+          </div>
+          <div class="turno-cbu-row">
+            <span class="turno-cbu-key">Alias</span>
+            <span class="turno-cbu-val">KORNMAN.ESTUDIO</span>
+          </div>
+          <div class="turno-cbu-row">
+            <span class="turno-cbu-key">Banco</span>
+            <span class="turno-cbu-val">Banco Nación / Galicia</span>
+          </div>
+          <button class="turno-cbu-copy" onclick="copiarCBU()">📋 Copiar CBU</button>
+        </div>
+      </div>
+
+      <div class="turno-steps reveal reveal-delay-3">
+        <div class="turno-step">
+          <div class="turno-step-num">1</div>
+          <div class="turno-step-text"><strong>Elegí día y horario</strong> disponible en el calendario.</div>
+        </div>
+        <div class="turno-step">
+          <div class="turno-step-num">2</div>
+          <div class="turno-step-text"><strong>Completá tus datos</strong> y describí brevemente tu consulta.</div>
+        </div>
+        <div class="turno-step">
+          <div class="turno-step-num">3</div>
+          <div class="turno-step-text"><strong>Realizá la transferencia</strong> al CBU indicado y adjuntá el comprobante.</div>
+        </div>
+        <div class="turno-step">
+          <div class="turno-step-num">4</div>
+          <div class="turno-step-text"><strong>Confirmación</strong> por email y WhatsApp dentro de las 2 horas hábiles.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna derecha: calendario + form -->
+    <div class="turno-form-card reveal reveal-delay-1">
+      <div class="turno-form-title">Seleccioná fecha y hora</div>
+      <div class="turno-form-sub">Atención de lunes a viernes, 9 a 18 hs.</div>
+
+      <!-- Calendario -->
+      <div class="cal-header">
+        <button class="cal-nav" onclick="cambiarMes(-1)">‹</button>
+        <span class="cal-month" id="calMonth"></span>
+        <button class="cal-nav" onclick="cambiarMes(1)">›</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+
+      <!-- Horarios -->
+      <div id="horariosSection" style="display:none;">
+        <div class="horarios-label">Horarios disponibles — <span id="fechaSelLabel"></span></div>
+        <div class="horarios-grid" id="horariosGrid"></div>
+      </div>
+
+      <!-- Resumen selección -->
+      <div class="turno-resumen" id="turnoResumen">
+        📅 <strong>Turno:</strong> <span id="resumenFecha">—</span> &nbsp;|&nbsp;
+        🕐 <strong>Hora:</strong> <span id="resumenHora">—</span>
+      </div>
+
+      <!-- Formulario datos -->
+      <div class="turno-form-fields" id="turnoFormFields" style="display:none;">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="turno-file-label">Nombre completo *</label>
+            <input type="text" id="tnNombre" placeholder="Juan García" style="font-family:var(--font-body);font-size:.88rem;color:var(--cream);background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.15);padding:.9rem 1.1rem;outline:none;transition:border-color .4s;width:100%;" required />
+          </div>
+          <div class="form-group">
+            <label class="turno-file-label">Teléfono / WhatsApp *</label>
+            <input type="tel" id="tnTel" placeholder="+54 9 376 ..." style="font-family:var(--font-body);font-size:.88rem;color:var(--cream);background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.15);padding:.9rem 1.1rem;outline:none;transition:border-color .4s;width:100%;" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="turno-file-label">Email *</label>
+          <input type="email" id="tnEmail" placeholder="juan@ejemplo.com" style="font-family:var(--font-body);font-size:.88rem;color:var(--cream);background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.15);padding:.9rem 1.1rem;outline:none;transition:border-color .4s;width:100%;" required />
+        </div>
+        <div class="form-group">
+          <label class="turno-file-label">Área de consulta</label>
+          <select id="tnArea" style="font-family:var(--font-body);font-size:.88rem;color:var(--cream);background:var(--navy);border:1px solid rgba(201,168,76,.15);padding:.9rem 1.1rem;outline:none;transition:border-color .4s;width:100%;appearance:none;">
+            <option value="">Seleccione...</option>
+            <option>Derecho Civil</option>
+            <option>Derecho Comercial</option>
+            <option>Derecho Laboral</option>
+            <option>Derecho Penal</option>
+            <option>Derecho Inmobiliario</option>
+            <option>Derecho Administrativo</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="turno-file-label">Descripción breve del caso *</label>
+          <textarea id="tnDescripcion" placeholder="Describa en pocas líneas su situación jurídica..." rows="3" style="font-family:var(--font-body);font-size:.88rem;color:var(--cream);background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.15);padding:.9rem 1.1rem;outline:none;resize:vertical;transition:border-color .4s;width:100%;" required></textarea>
+        </div>
+        <!-- Comprobante -->
+        <div class="form-group">
+          <label class="turno-file-label">Comprobante de transferencia *</label>
+          <div class="turno-file-input" onclick="document.getElementById('comprobanteFile').click()" id="fileDropZone">
+            📎 Hacé clic para adjuntar comprobante (JPG, PNG o PDF)
+          </div>
+          <input type="file" id="comprobanteFile" accept=".jpg,.jpeg,.png,.pdf" onchange="archivoSeleccionado(this)" />
+        </div>
+
+        <button class="turno-submit" id="turnoSubmitBtn" onclick="enviarTurno()" disabled>
+          Confirmar reserva
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <!-- Éxito -->
+      <div class="turno-success" id="turnoSuccess">
+        <div class="turno-success-icon">✅</div>
+        <h4>¡Solicitud enviada!</h4>
+        <p>Recibimos tu solicitud de turno. Verificaremos el comprobante y te confirmaremos por <strong>email y WhatsApp</strong> dentro de las 2 horas hábiles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BANNER ── -->
+<div class="banner-separator reveal">
+  <p class="banner-text"><strong>¿Necesita asesoramiento jurídico?</strong><br>Reservá tu consulta online.</p>
+  <a href="#turnos" class="btn-dark">Reservar turno →</a>
+</div>
+
+<!-- ── CONTACTO ── -->
+<section id="contacto">
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <p class="section-tag reveal">Contáctenos</p>
+      <h2 class="section-title reveal reveal-delay-1">Estamos <em>para<br>ayudarle</em></h2>
+      <div style="margin-top: 3rem;">
+        <div class="contact-detail reveal reveal-delay-1">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="contact-detail-body">
+            <label>Dirección</label>
+            <p>Av. Corrientes 1234, Piso 8<br>Ciudad Autónoma de Buenos Aires</p>
+          </div>
+        </div>
+        <div class="contact-detail reveal reveal-delay-2">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.77 12a19.79 19.79 0 01-3.07-8.67A2 2 0 013.68 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.64a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.92v1z"/></svg>
+          </div>
+          <div class="contact-detail-body">
+            <label>Teléfono</label>
+            <p>+54 11 4321-5678<br>Lunes a Viernes, 9 a 18 hs.</p>
+          </div>
+        </div>
+        <div class="contact-detail reveal reveal-delay-3">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="contact-detail-body">
+            <label>Email</label>
+            <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dab9b5b4a9afb6aebba99ab7b5a8bfb4b5a3bba9b5b9b3bbbeb5a9f4b9b5b7f4bba8">[email&#160;protected]</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-1">
+      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre *</label>
+            <input type="text" placeholder="Juan García" required />
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" placeholder="juan@ejemplo.com" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input type="tel" placeholder="+54 11 ..." />
+          </div>
+          <div class="form-group">
+            <label>Área de consulta</label>
+            <select>
+              <option value="">Seleccione...</option>
+              <option>Derecho Civil</option>
+              <option>Derecho Comercial</option>
+              <option>Derecho Laboral</option>
+              <option>Derecho Penal</option>
+              <option>Derecho Inmobiliario</option>
+              <option>Derecho Administrativo</option>
+              <option>Otro</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mensaje *</label>
+          <textarea placeholder="Describa brevemente su consulta..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">
+          Enviar consulta
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <div class="form-success" id="formSuccess">
+          ✓ &nbsp;Mensaje recibido. Nos pondremos en contacto a la brevedad.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#hero" class="nav-logo" style="text-decoration:none">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;fill:var(--gold)">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span class="nav-logo-text">Kornman <span>&</span> Asociados</span>
+      </a>
+      <p>Comprometidos con la justicia y la excelencia jurídica desde 2003. Su confianza es nuestra mayor responsabilidad.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Áreas de práctica</h4>
+      <ul>
+        <li><a href="#areas">Derecho Civil</a></li>
+        <li><a href="#areas">Derecho Comercial</a></li>
+        <li><a href="#areas">Derecho Laboral</a></li>
+        <li><a href="#areas">Derecho Penal</a></li>
+        <li><a href="#areas">Derecho Inmobiliario</a></li>
+        <li><a href="#areas">Derecho Administrativo</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>El estudio</h4>
+      <ul>
+        <li><a href="#equipo">Nuestro equipo</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="#contacto">Consulta gratuita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Kornman & Asociados. Todos los derechos reservados.</p>
+    <div class="footer-legal">
+      <a href="#">Política de privacidad</a>
+      <a href="#">Aviso legal</a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
+<script>
+  // -- Navbar scroll --
+  var navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', function() {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // -- Mobile menu --
+  var mobileMenu = document.getElementById('mobileMenu');
+  function toggleMenu() {
+    mobileMenu.classList.toggle('open');
+  }
+
+  // -- Reveal on scroll --
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(function(el) { observer.observe(el); });
+
+  // -- Form submit contacto --
+  function handleSubmit(e) {
+    e.preventDefault();
+    var success = document.getElementById('formSuccess');
+    success.style.display = 'block';
+    e.target.querySelectorAll('input, textarea, select, button').forEach(function(el) { el.disabled = true; });
+    setTimeout(function() {
+      success.style.display = 'none';
+      e.target.reset();
+      e.target.querySelectorAll('input, textarea, select, button').forEach(function(el) { el.disabled = false; });
+    }, 5000);
+  }
+
+  // -- Calendario & Turnos --
+  var mesActual = new Date();
+  mesActual.setDate(1);
+  var diaSeleccionado = null;
+  var horaSeleccionada = null;
+  var archivoComp = null;
+
+  var MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var DIAS_NOMBRE = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'];
+  var HORARIOS = ['09:00','09:45','10:30','11:15','12:00','14:00','14:45','15:30','16:15','17:00','17:45'];
+  var TOMADOS = { '2': ['09:00','14:00'], '5': ['10:30'], '10': ['09:00','09:45','10:30'] };
+
+  function renderCalendario() {
+    var mes = mesActual.getMonth();
+    var anio = mesActual.getFullYear();
+    document.getElementById('calMonth').textContent = MESES[mes] + ' ' + anio;
+    var grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+    DIAS_NOMBRE.forEach(function(d) {
+      var el = document.createElement('div');
+      el.className = 'cal-day-name';
+      el.textContent = d;
+      grid.appendChild(el);
+    });
+    var primerDia = new Date(anio, mes, 1).getDay();
+    var diasEnMes = new Date(anio, mes + 1, 0).getDate();
+    var hoy = new Date();
+    for (var i = 0; i < primerDia; i++) {
+      var emp = document.createElement('div');
+      emp.className = 'cal-day empty';
+      grid.appendChild(emp);
+    }
+    for (var d = 1; d <= diasEnMes; d++) {
+      (function(dia) {
+        var el = document.createElement('div');
+        var fecha = new Date(anio, mes, dia);
+        var dow = fecha.getDay();
+        var esHoy = fecha.toDateString() === hoy.toDateString();
+        var esPasado = fecha < hoy && !esHoy;
+        var esWeekend = dow === 0 || dow === 6;
+        if (esPasado) {
+          el.className = 'cal-day past';
+        } else if (esWeekend) {
+          el.className = 'cal-day weekend';
+        } else {
+          el.className = 'cal-day available' + (esHoy ? ' today' : '');
+          el.onclick = function() { seleccionarDia(dia, mes, anio); };
+        }
+        if (diaSeleccionado && diaSeleccionado.d === dia && diaSeleccionado.m === mes && diaSeleccionado.a === anio) {
+          el.className = 'cal-day selected';
+        }
+        el.textContent = dia;
+        grid.appendChild(el);
+      })(d);
+    }
+  }
+
+  function seleccionarDia(d, m, a) {
+    diaSeleccionado = { d: d, m: m, a: a };
+    horaSeleccionada = null;
+    renderCalendario();
+    var fechaStr = d + '/' + (m + 1) + '/' + a;
+    document.getElementById('fechaSelLabel').textContent = fechaStr;
+    document.getElementById('horariosSection').style.display = 'block';
+    renderHorarios(d);
+    document.getElementById('turnoResumen').classList.remove('visible');
+    document.getElementById('turnoFormFields').style.display = 'none';
+    document.getElementById('resumenFecha').textContent = DIAS_NOMBRE[new Date(a, m, d).getDay()] + ' ' + fechaStr;
+  }
+
+  function renderHorarios(dia) {
+    var grid = document.getElementById('horariosGrid');
+    grid.innerHTML = '';
+    var tomados = TOMADOS[String(dia)] || [];
+    HORARIOS.forEach(function(h) {
+      var el = document.createElement('div');
+      var isTaken = tomados.indexOf(h) !== -1;
+      el.className = 'horario-slot ' + (isTaken ? 'taken' : 'available');
+      el.textContent = h;
+      if (!isTaken) {
+        (function(hora) {
+          el.onclick = function() { seleccionarHora(hora, el); };
+        })(h);
+      }
+      grid.appendChild(el);
+    });
+  }
+
+  function seleccionarHora(h, el) {
+    horaSeleccionada = h;
+    document.querySelectorAll('.horario-slot').forEach(function(s) { s.classList.remove('selected'); });
+    el.classList.add('selected');
+    document.getElementById('resumenHora').textContent = h + ' hs.';
+    document.getElementById('turnoResumen').classList.add('visible');
+    document.getElementById('turnoFormFields').style.display = 'flex';
+    validarFormTurno();
+  }
+
+  function cambiarMes(dir) {
+    mesActual.setMonth(mesActual.getMonth() + dir);
+    diaSeleccionado = null;
+    horaSeleccionada = null;
+    document.getElementById('horariosSection').style.display = 'none';
+    document.getElementById('turnoResumen').classList.remove('visible');
+    document.getElementById('turnoFormFields').style.display = 'none';
+    renderCalendario();
+  }
+
+  function archivoSeleccionado(input) {
+    archivoComp = input.files[0];
+    if (archivoComp) {
+      document.getElementById('fileDropZone').textContent = 'Archivo: ' + archivoComp.name;
+      document.getElementById('fileDropZone').style.borderColor = 'var(--gold)';
+      document.getElementById('fileDropZone').style.color = 'var(--gold)';
+    }
+    validarFormTurno();
+  }
+
+  function validarFormTurno() {
+    var n = document.getElementById('tnNombre');
+    var t = document.getElementById('tnTel');
+    var em = document.getElementById('tnEmail');
+    var desc = document.getElementById('tnDescripcion');
+    var ok = diaSeleccionado && horaSeleccionada
+      && n && n.value.trim()
+      && t && t.value.trim()
+      && em && em.value.trim()
+      && desc && desc.value.trim()
+      && archivoComp;
+    var btn = document.getElementById('turnoSubmitBtn');
+    if (btn) btn.disabled = !ok;
+  }
+
+  document.addEventListener('input', function(e) {
+    var ids = ['tnNombre','tnTel','tnEmail','tnDescripcion'];
+    if (ids.indexOf(e.target.id) !== -1) validarFormTurno();
+  });
+
+  function copiarCBU() {
+    var cbu = document.getElementById('cbuVal').textContent;
+    navigator.clipboard.writeText(cbu).then(function() {
+      var btn = document.querySelector('.turno-cbu-copy');
+      btn.textContent = 'CBU copiado!';
+      setTimeout(function() { btn.textContent = 'Copiar CBU'; }, 2000);
+    });
+  }
+
+  function enviarTurno() {
+    var nombre = document.getElementById('tnNombre').value.trim();
+    var tel    = document.getElementById('tnTel').value.trim();
+    var email  = document.getElementById('tnEmail').value.trim();
+    var area   = document.getElementById('tnArea').value;
+    var desc   = document.getElementById('tnDescripcion').value.trim();
+    var d = diaSeleccionado.d, m = diaSeleccionado.m, a = diaSeleccionado.a;
+    var fechaStr = DIAS_NOMBRE[new Date(a, m, d).getDay()] + ' ' + d + '/' + (m + 1) + '/' + a;
+    var hora = horaSeleccionada;
+    var msg = 'NUEVA RESERVA DE TURNO'
+      + '%0A%0ANombre: ' + encodeURIComponent(nombre)
+      + '%0ATel: ' + encodeURIComponent(tel)
+      + '%0AEmail: ' + encodeURIComponent(email)
+      + '%0AArea: ' + encodeURIComponent(area || 'No especificada')
+      + '%0ACaso: ' + encodeURIComponent(desc)
+      + '%0A%0AFecha: ' + encodeURIComponent(fechaStr)
+      + '%0AHora: ' + encodeURIComponent(hora) + ' hs.'
+      + '%0A%0AComprobante adjunto en formulario web.';
+    var waNumero = '5493764000000'; // REEMPLAZAR por numero real
+    window.open('https://wa.me/' + waNumero + '?text=' + msg, '_blank');
+    document.getElementById('turnoFormFields').style.display = 'none';
+    document.getElementById('turnoResumen').classList.remove('visible');
+    document.getElementById('horariosSection').style.display = 'none';
+    document.getElementById('turnoSuccess').style.display = 'block';
+  }
+
+  renderCalendario();
+</script>
+</body>
+</html>
